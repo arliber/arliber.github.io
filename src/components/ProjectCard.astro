@@ -1,0 +1,17 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { url } from '../lib/site';
+interface Props { project: CollectionEntry<'projects'>; heading?: 'h2' | 'h3' }
+const { project, heading: H = 'h3' } = Astro.props;
+const { title, status, summary, image } = project.data;
+---
+<a class="card" href={url(`/projects/${project.id}/`)}>
+  {image
+    ? <img class="placeholder-img" src={image.startsWith('/') ? url(image) : image} alt="" loading="lazy" />
+    : <div class="placeholder"><span>[ PHOTO / RENDER ]</span></div>}
+  <div class="card-head">
+    <H>{title}</H>
+    <span class={`chip chip-${status}`}>{status}</span>
+  </div>
+  <p>{summary}</p>
+</a>

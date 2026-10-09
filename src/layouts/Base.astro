@@ -1,0 +1,39 @@
+---
+import '../styles/global.css';
+import ThemeScript from '../components/ThemeScript.astro';
+import TitleBar from '../components/TitleBar.astro';
+import Footer from '../components/Footer.astro';
+import { url } from '../lib/site';
+
+interface Props {
+  title: string;
+  description?: string;
+  path?: { label: string; href?: string }[];
+  editPath?: string;
+  footerRuled?: boolean;
+}
+const { title, description = 'Small machines, smarter workflows, and notes on both.', path, editPath, footerRuled } = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" href={url('/favicon.svg')} type="image/svg+xml" />
+    <link rel="preload" href={url('/fonts/IBMPlexMono-Regular.woff2')} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={url('/fonts/IBMPlexSans-Medium.woff2')} as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" href={url('/fonts/plex.css')} />
+    <ThemeScript />
+  </head>
+  <body>
+    <div class="page">
+      <div class="frame">
+        <TitleBar path={path} />
+        <slot />
+        <Footer editPath={editPath} ruled={footerRuled} />
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,53 @@
+---
+import Base from '../layouts/Base.astro';
+import Dashboard from '../components/Dashboard.astro';
+import SectionHead from '../components/SectionHead.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import PostRow from '../components/PostRow.astro';
+import LinkItem from '../components/LinkItem.astro';
+import { getProjects, getPosts, getLinks } from '../lib/site';
+
+const projects = (await getProjects()).slice(0, 6);
+const posts = (await getPosts()).slice(0, 4);
+const links = (await getLinks()).slice(0, 4);
+---
+<Base title="Arik — Home">
+  <section class="hero">
+    <div class="hero-intro">
+<pre class="banner" role="img" aria-label="Liber A.">██╗     ██╗██████╗ ███████╗██████╗    █████╗
+██║     ██║██╔══██╗██╔════╝██╔══██╗  ██╔══██╗
+██║     ██║██████╔╝█████╗  ██████╔╝  ███████║
+██║     ██║██╔══██╗██╔══╝  ██╔══██╗  ██╔══██║
+███████╗██║██████╔╝███████╗██║  ██║  ██║  ██║██╗
+╚══════╝╚═╝╚═════╝ ╚══════╝╚═╝  ╚═╝  ╚═╝  ╚═╝╚═╝</pre>
+      <div class="hero-copy">
+        <h1>Small machines, smarter workflows, and notes on both.</h1>
+        <p>A public notebook of what I'm building, reading and thinking through — ESP32 gadgets, AI agents, and the occasional space shuttle.</p>
+      </div>
+    </div>
+    <Dashboard />
+  </section>
+
+  <div class="hatch-band" aria-hidden="true"></div>
+
+  <section id="projects" class="rule-strong">
+    <SectionHead num="01" path="~/projects" href="/projects/" linkLabel="All projects" />
+    <div class="grid">
+      {projects.map((p) => <ProjectCard project={p} />)}
+    </div>
+  </section>
+
+  <div class="hatch-band" aria-hidden="true"></div>
+
+  <section id="writing" class="rule-strong">
+    <SectionHead num="02" path="~/writing" href="/writing/" linkLabel="All posts" />
+    {posts.length ? posts.map((p) => <PostRow post={p} />) : <p class="empty">No posts yet.</p>}
+  </section>
+
+  <div class="hatch-band" aria-hidden="true"></div>
+
+  <section id="reading" class="rule-strong">
+    <SectionHead num="03" path="~/reading" href="/reading/" linkLabel="All links" />
+    {links.map((l) => <LinkItem link={l} />)}
+  </section>
+</Base>

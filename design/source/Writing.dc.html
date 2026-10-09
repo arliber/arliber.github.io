@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Arik — Writing</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:inherit;text-decoration:none}a:hover{text-decoration:underline;text-underline-offset:4px}
+@keyframes dcblink{50%{opacity:0}}
+</style>
+</helmet>
+<div style="min-height: 100vh; background: {{t.bg}}; color: {{t.ink}}; font-family: 'IBM Plex Sans', 'Helvetica Neue', sans-serif; padding: 0 clamp(0px, 2vw, 16px); box-sizing: border-box">
+<div style="max-width: 1120px; margin: 0 auto; border-left: 1px solid {{t.line}}; border-right: 1px solid {{t.line}}; min-height: 100vh">
+
+<header style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px clamp(18px, 4vw, 32px); border-bottom: 1px solid {{t.strong}}; font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12px; letter-spacing: 0.04em">
+<div style="display: flex; align-items: center; gap: 14px; min-width: 0">
+<span aria-hidden="true" style="display: flex; gap: 6px"><span style="width: 10px; height: 10px; border: 1px solid {{t.ink}}"></span><span style="width: 10px; height: 10px; border: 1px solid {{t.ink}}"></span><span style="width: 10px; height: 10px; background: {{t.ink}}"></span></span>
+<span style="color: {{t.muted}}; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">arik@site: <a href="Main.dc.html" style="color: {{accent}}">~</a>/writing</span>
+</div>
+<button type="button" onClick="{{toggle}}" aria-pressed="{{darkPressed}}" style="font: inherit; letter-spacing: inherit; text-transform: uppercase; background: transparent; color: {{t.ink}}; border: 1px solid {{t.ink}}; padding: 0 12px; min-height: 32px; cursor: pointer; white-space: nowrap">{{themeLabel}}</button>
+</header>
+
+<section style="padding: clamp(36px, 6vw, 56px) clamp(18px, 4vw, 32px) clamp(24px, 4vw, 32px); display: flex; flex-direction: column; gap: 14px; border-bottom: 1px solid {{t.strong}}">
+<div style="font-family: 'IBM Plex Mono', monospace; font-size: 14px; color: {{t.muted}}"><span style="color: {{accent}}">arik@site</span>:~$ ls writing/</div>
+<h1 style="margin: 0; font-size: clamp(34px, 5vw, 48px); line-height: 1.05; font-weight: 500; letter-spacing: -0.03em">Build logs and notes.</h1>
+<p style="margin: 0; font-size: 17px; line-height: 1.6; color: {{t.sub}}; max-width: 560px">Longer write-ups of the projects, plus the occasional essay.</p>
+</section>
+<div style="border-bottom: 1px solid {{t.strong}}">
+<sc-for list="{{posts}}" as="w" hint-placeholder-count="4">
+<a href="Article.dc.html" style="display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 28px; padding: 20px clamp(18px, 4vw, 32px); border-bottom: 1px solid {{t.line2}}">
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: {{t.muted}}; width: 90px; letter-spacing: 0.04em">{{w.date}}</span>
+<span style="flex: 1 1 340px; font-size: clamp(17px, 1.8vw, 20px); font-weight: 500; letter-spacing: -0.01em">{{w.title}}</span>
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: {{t.muted}}">{{w.time}} →</span>
+</a>
+</sc-for>
+</div>
+
+<footer style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px 16px; padding: 24px clamp(18px, 4vw, 32px) 36px; font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.04em; color: {{t.muted}}">
+<span>░░░░░░ © 2026 Arik · built from markdown</span>
+<span style="display: flex; gap: 20px"><a href="https://github.com/Arlever">github ↗</a></span>
+</footer>
+
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"dark":{"editor":"boolean","default":false},"accent":{"editor":"color","default":"#2457C5","options":["#2457C5","#1F7A5C","#6D3FC0","#15171C"]},"signal":{"editor":"color","default":"#C2410C","options":["#C2410C","#B7791F","#2457C5","#BE185D"]},"$preview":{"width":1440,"height":800}}'>
+class Component extends DCLogic {
+  mix(hex, w) {
+    const n = parseInt(String(hex).replace('#', ''), 16);
+    const f = (c) => Math.round(c + (255 - c) * w).toString(16).padStart(2, '0');
+    return '#' + f((n >> 16) & 255) + f((n >> 8) & 255) + f(n & 255);
+  }
+  renderVals() {
+    const st = this.state || {};
+    const dark = st.dark !== undefined ? st.dark : !!this.props.dark;
+    const t = dark ? {
+      bg: '#101114', ink: '#ECE9E2', sub: '#B9B6AE', muted: '#8E929C', line: 'rgba(236,233,226,0.16)', line2: 'rgba(236,233,226,0.09)', strong: 'rgba(236,233,226,0.55)', hatch: 'rgba(236,233,226,0.09)'
+    } : {
+      bg: '#F3F1EC', ink: '#15171C', sub: '#3A3E47', muted: '#5A5F6B', line: 'rgba(21,23,28,0.18)', line2: 'rgba(21,23,28,0.10)', strong: '#15171C', hatch: 'rgba(21,23,28,0.10)'
+    };
+    const a0 = this.props.accent ?? '#2457C5';
+    const s0 = this.props.signal ?? '#C2410C';
+    const accent = dark ? this.mix(a0, 0.38) : a0;
+    const signal = dark ? this.mix(s0, 0.3) : s0;
+    const posts = [
+      { date: 'DRAFT', title: 'Cockpit window: streaming satellite tiles to an ESP32', time: '8 min' },
+      { date: 'DRAFT', title: 'Building a mission-control panel out of a CoreS3', time: '10 min' },
+      { date: 'DRAFT', title: 'A ring gimbal for a space shuttle model', time: '6 min' },
+      { date: 'DRAFT', title: 'My LLM wiki, and reaching it from anywhere', time: '7 min' }
+    ];
+    return {
+      t, accent, signal, posts,
+      themeLabel: dark ? '◑ light' : '◐ dark',
+      darkPressed: dark ? 'true' : 'false',
+      toggle: () => this.setState({ dark: !dark })
+    };
+  }
+}
+</script>
+</body>
+</html>

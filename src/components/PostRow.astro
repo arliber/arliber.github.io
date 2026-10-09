@@ -1,0 +1,11 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { url, postLabel, readingTime } from '../lib/site';
+interface Props { post: CollectionEntry<'writing'> }
+const { post } = Astro.props;
+---
+<a class="post-row" href={url(`/writing/${post.id}/`)}>
+  <span class="post-date">{postLabel(post)}</span>
+  <span class="post-title">{post.data.title}</span>
+  <span class="post-time">{readingTime(post.body)} →</span>
+</a>

@@ -1,0 +1,45 @@
+---
+import { getEntry, render } from 'astro:content';
+import Article from '../../layouts/Article.astro';
+import { SITE } from '../../site.config';
+import { getPosts, fmtDate, readingTime, postLabel } from '../../lib/site';
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { title, dek, date, draft, tags = [], project: projectRef } = post.data;
+const { Content, headings } = await render(post);
+const project = projectRef ? await getEntry(projectRef) : undefined;
+
+// Related: same project or shared tag first, then newest.
+const others = (await getPosts()).filter((p) => p.id !== post.id);
+const score = (p: typeof post) =>
+  (projectRef && p.data.project?.id === projectRef.id ? 2 : 0) + ((p.data.tags ?? []).some((t) => tags.includes(t)) ? 1 : 0);
+const related = others
+  .map((p, i) => ({ p, s: score(p), i }))
+  .sort((a, b) => b.s - a.s || a.i - b.i)
+  .slice(0, 2)
+  .map(({ p }) => ({ label: postLabel(p), title: p.data.title, href: `/writing/${p.id}/` }));
+---
+<Article
+  title={title}
+  dek={dek}
+  path={[{ label: 'writing', href: '/writing/' }, { label: `${post.id}.md` }]}
+  crumbs={{ section: { label: 'Writing', href: '/writing/' }, parts: tags.slice(0, 1), draft }}
+  meta={[
+    { k: 'AUTHOR', v: SITE.author },
+    { k: 'PUBLISHED', v: date && !draft ? fmtDate(date) : '[DATE]' },
+    { k: 'READING TIME', v: readingTime(post.body) },
+    project
+      ? { k: 'PROJECT', v: `${project.data.title} →`, href: `/projects/${project.id}/` }
+      : { k: 'PROJECT', v: '—' },
+  ]}
+  headings={headings}
+  related={related}
+  editPath={`src/content/writing/${post.id}.md`}
+>
+  <Content />
+</Article>

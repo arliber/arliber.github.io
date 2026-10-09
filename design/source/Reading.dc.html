@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Arik — Reading</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:inherit;text-decoration:none}a:hover{text-decoration:underline;text-underline-offset:4px}
+@keyframes dcblink{50%{opacity:0}}
+</style>
+</helmet>
+<div style="min-height: 100vh; background: {{t.bg}}; color: {{t.ink}}; font-family: 'IBM Plex Sans', 'Helvetica Neue', sans-serif; padding: 0 clamp(0px, 2vw, 16px); box-sizing: border-box">
+<div style="max-width: 1120px; margin: 0 auto; border-left: 1px solid {{t.line}}; border-right: 1px solid {{t.line}}; min-height: 100vh">
+
+<header style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px clamp(18px, 4vw, 32px); border-bottom: 1px solid {{t.strong}}; font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12px; letter-spacing: 0.04em">
+<div style="display: flex; align-items: center; gap: 14px; min-width: 0">
+<span aria-hidden="true" style="display: flex; gap: 6px"><span style="width: 10px; height: 10px; border: 1px solid {{t.ink}}"></span><span style="width: 10px; height: 10px; border: 1px solid {{t.ink}}"></span><span style="width: 10px; height: 10px; background: {{t.ink}}"></span></span>
+<span style="color: {{t.muted}}; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">arik@site: <a href="Main.dc.html" style="color: {{accent}}">~</a>/reading</span>
+</div>
+<button type="button" onClick="{{toggle}}" aria-pressed="{{darkPressed}}" style="font: inherit; letter-spacing: inherit; text-transform: uppercase; background: transparent; color: {{t.ink}}; border: 1px solid {{t.ink}}; padding: 0 12px; min-height: 32px; cursor: pointer; white-space: nowrap">{{themeLabel}}</button>
+</header>
+
+<section style="padding: clamp(36px, 6vw, 56px) clamp(18px, 4vw, 32px) clamp(24px, 4vw, 32px); display: flex; flex-direction: column; gap: 14px; border-bottom: 1px solid {{t.line}}">
+<div style="font-family: 'IBM Plex Mono', monospace; font-size: 14px; color: {{t.muted}}"><span style="color: {{accent}}">arik@site</span>:~$ ls reading/</div>
+<h1 style="margin: 0; font-size: clamp(34px, 5vw, 48px); line-height: 1.05; font-weight: 500; letter-spacing: -0.03em">Links worth keeping.</h1>
+<p style="margin: 0; font-size: 17px; line-height: 1.6; color: {{t.sub}}; max-width: 560px">Articles, tools and references. Some come with a note.</p>
+</section>
+
+<div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; padding: 16px clamp(18px, 4vw, 32px); border-bottom: 1px solid {{t.strong}}">
+<div role="group" aria-label="Filter by tag" style="display: flex; flex-wrap: wrap; gap: 6px">
+<sc-for list="{{filters}}" as="f" hint-placeholder-count="7">
+<button type="button" onClick="{{f.pick}}" aria-pressed="{{f.pressed}}" style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.04em; padding: 0 12px; min-height: 34px; cursor: pointer; {{f.style}}">{{f.label}}</button>
+</sc-for>
+</div>
+<div style="display: flex; align-items: center; gap: 10px; font-family: 'IBM Plex Mono', monospace; font-size: 12px; flex: 0 1 260px; min-width: 200px">
+<label for="grep" style="color: {{t.muted}}; letter-spacing: 0.06em">grep</label>
+<input id="grep" type="search" value="{{q}}" onChange="{{onQuery}}" placeholder="search links…" style="flex: 1; min-width: 0; font-family: inherit; font-size: 13px; height: 34px; padding: 0 10px; background: transparent; color: {{t.ink}}; border: 1px solid {{t.line}}; border-radius: 0; box-sizing: border-box">
+</div>
+</div>
+<div style="padding: 10px clamp(18px, 4vw, 32px); border-bottom: 1px solid {{t.line}}; font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: {{t.muted}}">{{countLabel}}</div>
+
+<div>
+<sc-for list="{{items}}" as="it" hint-placeholder-count="8">
+<div style="padding: 22px clamp(18px, 4vw, 32px); border-bottom: 1px solid {{t.line2}}; display: flex; flex-direction: column; gap: 6px">
+<div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 16px">
+<a href="#" style="display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; min-width: 0">
+<span style="font-size: clamp(17px, 1.8vw, 20px); font-weight: 500; letter-spacing: -0.01em">{{it.title}}</span>
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: {{t.muted}}">{{it.domain}} ↗</span>
+</a>
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.06em; color: {{t.muted}}">#{{it.tag}}</span>
+</div>
+<span style="font-size: 15px; line-height: 1.55; color: {{t.sub}}; max-width: 720px">{{it.desc}}</span>
+<sc-if value="{{it.hasNote}}" hint-placeholder-val="{{ false }}">
+<div style="position: relative; margin-top: 8px; max-width: 640px; background: {{t.noteBg}}; padding: 12px 34px 12px 16px; clip-path: polygon(0 0, calc(100% - 18px) 0, 100% 18px, 100% 100%, 0 100%); box-sizing: border-box">
+<span aria-hidden="true" style="position: absolute; top: 0; right: 0; width: 18px; height: 18px; background: {{t.noteFold}}; clip-path: polygon(0 0, 0 100%, 100% 100%)"></span>
+<span style="font-size: 15px; line-height: 1.55; font-style: italic; color: {{t.noteInk}}">{{it.note}}</span><span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: {{t.noteSign}}; white-space: nowrap"> — A.</span>
+</div>
+</sc-if>
+</div>
+</sc-for>
+</div>
+
+<footer style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px 16px; padding: 24px clamp(18px, 4vw, 32px) 36px; border-top: 1px solid {{t.strong}}; font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.04em; color: {{t.muted}}">
+<span>░░░░░░ © 2026 Arik · built from markdown</span>
+<span style="display: flex; gap: 20px"><a href="https://github.com/Arlever">github ↗</a></span>
+</footer>
+
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"dark":{"editor":"boolean","default":false},"accent":{"editor":"color","default":"#2457C5","options":["#2457C5","#1F7A5C","#6D3FC0","#15171C"]},"signal":{"editor":"color","default":"#C2410C","options":["#C2410C","#B7791F","#2457C5","#BE185D"]},"$preview":{"width":1440,"height":1700}}'>
+class Component extends DCLogic {
+  mix(hex, w) {
+    const n = parseInt(String(hex).replace('#', ''), 16);
+    const f = (c) => Math.round(c + (255 - c) * w).toString(16).padStart(2, '0');
+    return '#' + f((n >> 16) & 255) + f((n >> 8) & 255) + f(n & 255);
+  }
+  renderVals() {
+    const st = this.state || {};
+    const dark = st.dark !== undefined ? st.dark : !!this.props.dark;
+    const t = dark ? {
+      bg: '#101114', ink: '#ECE9E2', sub: '#B9B6AE', muted: '#8E929C', line: 'rgba(236,233,226,0.16)', line2: 'rgba(236,233,226,0.09)', strong: 'rgba(236,233,226,0.55)', noteBg: '#2B2611', noteFold: '#4A401C', noteInk: '#F0E2A8', noteSign: '#C9AE55'
+    } : {
+      bg: '#F3F1EC', ink: '#15171C', sub: '#3A3E47', muted: '#5A5F6B', line: 'rgba(21,23,28,0.18)', line2: 'rgba(21,23,28,0.10)', strong: '#15171C', noteBg: '#F8EDBE', noteFold: '#E2CF84', noteInk: '#3B300A', noteSign: '#7A5D00'
+    };
+    const a0 = this.props.accent ?? '#2457C5';
+    const accent = dark ? this.mix(a0, 0.38) : a0;
+    const all = [
+      { domain: 'claude.dev', title: 'Getting started with Claude Code mods', desc: 'Hooks that ship inside plugins and draw their own UI in the terminal, built from an empty folder.', tag: 'agents', note: 'The article layout here is the reference for my own posts.' },
+      { domain: 'anthropic.com', title: 'Building effective agents', desc: 'Simple, composable patterns beat heavy frameworks; when a workflow is enough and when you need an agent.', tag: 'agents', note: '' },
+      { domain: 'makingsoftware.com', title: 'Making Software', desc: 'An illustrated manual on how everyday software and hardware actually works.', tag: 'design', note: '' },
+      { domain: 's2maps.eu', title: 'Sentinel-2 cloudless', desc: 'A cloud-free mosaic of the whole planet, served as map tiles.', tag: 'maps', note: 'The imagery behind the cockpit window project.' },
+      { domain: 'zed.dev', title: 'Zed', desc: 'A fast, collaborative code editor.', tag: 'tools', note: 'The editor I write in.' },
+      { domain: 'incompleteideas.net', title: 'The Bitter Lesson', desc: 'General methods that scale with compute keep winning over hand-built cleverness.', tag: 'ml', note: '' },
+      { domain: 'karpathy.medium.com', title: 'Software 2.0', desc: 'Neural networks as a new kind of software, written by optimization rather than by hand.', tag: 'ml', note: '' },
+      { domain: 'paulgraham.com', title: 'Maker’s Schedule, Manager’s Schedule', desc: 'Why one meeting can wreck an afternoon of building.', tag: 'work', note: '' }
+    ];
+    const tag = st.tag || 'all';
+    const q = st.q || '';
+    const ql = q.trim().toLowerCase();
+    const items = all
+      .filter(x => tag === 'all' || x.tag === tag)
+      .filter(x => !ql || (x.title + ' ' + x.desc + ' ' + x.domain + ' ' + x.note).toLowerCase().includes(ql))
+      .map(x => ({ ...x, hasNote: !!x.note }));
+    const labels = ['all', 'agents', 'ml', 'design', 'tools', 'maps', 'work'];
+    const filters = labels.map(l => ({
+      label: l === 'all' ? '*' : l,
+      pressed: l === tag ? 'true' : 'false',
+      style: l === tag ? 'background: ' + t.ink + '; color: ' + t.bg + '; border: 1px solid ' + t.ink : 'background: transparent; color: ' + t.ink + '; border: 1px solid ' + t.line,
+      pick: () => this.setState({ tag: l })
+    }));
+    return {
+      t, accent, items, filters,
+      q, onQuery: (e) => this.setState({ q: e.target.value }),
+      countLabel: items.length + (items.length === 1 ? ' item' : ' items') + (ql ? ' matching "' + q.trim() + '"' : ''),
+      themeLabel: dark ? '◑ light' : '◐ dark',
+      darkPressed: dark ? 'true' : 'false',
+      toggle: () => this.setState({ dark: !dark })
+    };
+  }
+}
+</script>
+</body>
+</html>

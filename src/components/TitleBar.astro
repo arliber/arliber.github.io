@@ -1,0 +1,33 @@
+---
+import { url } from '../lib/site';
+
+interface Props {
+  /** Path below ~, e.g. [{ label: 'writing', href: '/writing/' }, { label: 'post.md' }]. Empty on home. */
+  path?: { label: string; href?: string }[];
+}
+const { path = [] } = Astro.props;
+---
+<header class="titlebar">
+  <div class="titlebar-left">
+    <span class="lights" aria-hidden="true"><span></span><span></span><span></span></span>
+    <span class="path">arik@site: {path.length === 0 ? '~ — zsh' : (
+      <><a class="home" href={url('/')}>~</a>{path.map((s) => <>/{s.href ? <a href={url(s.href)}>{s.label}</a> : s.label}</>)}</>
+    )}</span>
+  </div>
+  <button type="button" class="theme-toggle" aria-pressed="false" data-theme-toggle><span class="when-light">◐ dark</span><span class="when-dark">◑ light</span></button>
+</header>
+
+<script>
+  const btn = document.querySelector<HTMLButtonElement>('[data-theme-toggle]')!;
+  const root = document.documentElement;
+  const sync = () => {
+    const dark = root.dataset.theme === 'dark';
+    btn.setAttribute('aria-pressed', String(dark));
+  };
+  sync();
+  btn.addEventListener('click', () => {
+    root.dataset.theme = root.dataset.theme === 'dark' ? 'light' : 'dark';
+    try { localStorage.setItem('theme', root.dataset.theme); } catch {}
+    sync();
+  });
+</script>

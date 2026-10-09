@@ -1,0 +1,16 @@
+---
+import Base from '../../layouts/Base.astro';
+import PostRow from '../../components/PostRow.astro';
+import { getPosts } from '../../lib/site';
+const posts = await getPosts();
+---
+<Base title="Arik — Writing" path={[{ label: 'writing' }]}>
+  <section class="intro">
+    <div class="prompt"><span>arik@site</span>:~$ ls writing/</div>
+    <h1>Build logs and notes.</h1>
+    <p>Longer write-ups of the projects, plus the occasional essay.</p>
+  </section>
+  <div class="rule-strong">
+    {posts.length ? posts.map((p) => <PostRow post={p} />) : <p class="empty">No posts yet.</p>}
+  </div>
+</Base>

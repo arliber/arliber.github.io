@@ -1,0 +1,90 @@
+---
+import status from '../data/status.json';
+import { SITE } from '../site.config';
+
+const goals = status.goals;
+const done = goals.filter((g) => g.done).length;
+const W = 24;
+const filled = goals.length ? Math.round((W * done) / goals.length) : 0;
+const ICON: Record<string, string> = { running: '⠋', active: '●', idle: '○' };
+
+// Server-rendered fallback; the script below keeps it live.
+const now = new Date();
+const fmt = (o: Intl.DateTimeFormatOptions) => new Intl.DateTimeFormat('en-GB', { timeZone: SITE.timeZone, ...o });
+const clock = fmt({ hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false }).format(now);
+const day = fmt({ weekday: 'short', day: '2-digit', month: 'short' }).format(now).replace(',', '').toUpperCase();
+---
+<div class="dash-col">
+  <div class="dash" role="region" aria-label="Status dashboard" data-dash data-tz={SITE.timeZone}>
+    <div class="dash-head">
+      <span>┌ status.live</span>
+      <span class="online"><i></i>ONLINE</span>
+    </div>
+
+    <div class="dash-row dash-clock">
+      <span class="clock" data-clock>{clock}</span>
+      <span class="date"><span data-day>{day}</span><br />WK <span data-week>--</span></span>
+    </div>
+
+    <div class="dash-row dash-list">
+      <div class="dash-label"><span>THIS WEEK</span><span>{done}/{goals.length}</span></div>
+      {goals.map((g) => (
+        <div class:list={['goal', { done: g.done }]}>
+          <span class="goal-box">{g.done ? '[x]' : '[ ]'}</span><span>{g.text}</span>
+        </div>
+      ))}
+      <div class="dash-bar" aria-hidden="true"><span class="on">{'▓'.repeat(filled)}</span><span class="off">{'░'.repeat(W - filled)}</span></div>
+    </div>
+
+    <div class="dash-row dash-list">
+      <div class="dash-label">AGENTS</div>
+      {status.agents.map((a) => (
+        <div class="agent">
+          <span class={`agent-icon ${a.state}`} data-spin={a.state === 'running' ? '' : undefined} aria-hidden="true">{ICON[a.state] ?? '○'}</span>
+          <span class="sr-only">{a.state}:</span>
+          <span class="agent-name">{a.name}</span>
+          <span class="agent-task">{a.task}</span>
+        </div>
+      ))}
+    </div>
+
+    <div class="dash-tail">$ tail -f now.md <span class="cursor"></span></div>
+  </div>
+</div>
+
+<script>
+  const dash = document.querySelector<HTMLElement>('[data-dash]')!;
+  const timeZone = dash.dataset.tz || undefined;
+  const $ = (s: string) => dash.querySelector<HTMLElement>(s)!;
+  const clockEl = $('[data-clock]'), dayEl = $('[data-day]'), weekEl = $('[data-week]');
+  const spinners = dash.querySelectorAll<HTMLElement>('[data-spin]');
+  const FRAMES = ['⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏'];
+  const still = matchMedia('(prefers-reduced-motion: reduce)');
+
+  const timeFmt = new Intl.DateTimeFormat('en-GB', { timeZone, hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
+  const dayFmt = new Intl.DateTimeFormat('en-GB', { timeZone, weekday: 'short', day: '2-digit', month: 'short' });
+  const ymdFmt = new Intl.DateTimeFormat('en-CA', { timeZone, year: 'numeric', month: '2-digit', day: '2-digit' });
+
+  // ISO-8601 week number of the calendar date in `timeZone`.
+  function isoWeek(d: Date) {
+    const [y, m, day] = ymdFmt.format(d).split('-').map(Number);
+    const x = new Date(Date.UTC(y, m - 1, day));
+    const dow = x.getUTCDay() || 7;
+    x.setUTCDate(x.getUTCDate() + 4 - dow);
+    const y0 = new Date(Date.UTC(x.getUTCFullYear(), 0, 1));
+    return Math.ceil(((x.getTime() - y0.getTime()) / 86400000 + 1) / 7);
+  }
+
+  function tick() {
+    const d = new Date();
+    clockEl.textContent = timeFmt.format(d);
+    dayEl.textContent = dayFmt.format(d).replace(',', '').toUpperCase();
+    weekEl.textContent = String(isoWeek(d)).padStart(2, '0');
+    if (!still.matches) {
+      const f = FRAMES[Math.floor(d.getTime() / 1000) % FRAMES.length];
+      spinners.forEach((s) => (s.textContent = f));
+    }
+  }
+  tick();
+  setInterval(tick, 1000);
+</script>

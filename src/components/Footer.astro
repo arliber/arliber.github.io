@@ -1,0 +1,17 @@
+---
+import { SITE } from '../site.config';
+
+interface Props {
+  editPath?: string; // repo-relative path of the page's .md
+  ruled?: boolean;
+}
+const { editPath, ruled = false } = Astro.props;
+const year = new Date().getFullYear();
+---
+<footer class:list={['footer', { ruled }]}>
+  <span>░░░░░░ © {year} {SITE.author} · built from markdown</span>
+  <span class="footer-links">
+    <a href={SITE.github}>github ↗</a>
+    {editPath && <a href={`${SITE.repo}/edit/${SITE.branch}/${editPath}`}>edit this page (.md)</a>}
+  </span>
+</footer>

@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Arik — Reading</title>
+<!-- STATIC REFERENCE MOCK rendered from design/source/Reading.dc.html (light theme). Interactivity is specified in HANDOVER.md, not implemented here. -->
+
+<link rel="stylesheet" href="../fonts/plex.css">
+<style>
+body{margin:0}
+a{color:inherit;text-decoration:none}a:hover{text-decoration:underline;text-underline-offset:4px}
+@keyframes dcblink{50%{opacity:0}}
+</style>
+
+</head>
+<body>
+
+<div style="min-height: 100vh; background: #F3F1EC; color: #15171C; font-family: 'IBM Plex Sans', 'Helvetica Neue', sans-serif; padding: 0 clamp(0px, 2vw, 16px); box-sizing: border-box">
+<div style="max-width: 1120px; margin: 0 auto; border-left: 1px solid rgba(21,23,28,0.18); border-right: 1px solid rgba(21,23,28,0.18); min-height: 100vh">
+
+<header style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px clamp(18px, 4vw, 32px); border-bottom: 1px solid #15171C; font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12px; letter-spacing: 0.04em">
+<div style="display: flex; align-items: center; gap: 14px; min-width: 0">
+<span aria-hidden="true" style="display: flex; gap: 6px"><span style="width: 10px; height: 10px; border: 1px solid #15171C"></span><span style="width: 10px; height: 10px; border: 1px solid #15171C"></span><span style="width: 10px; height: 10px; background: #15171C"></span></span>
+<span style="color: #5A5F6B; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">arik@site: <a href="home-light.html" style="color: #2457C5">~</a>/reading</span>
+</div>
+<button type="button" aria-pressed="false" style="font: inherit; letter-spacing: inherit; text-transform: uppercase; background: transparent; color: #15171C; border: 1px solid #15171C; padding: 0 12px; min-height: 32px; cursor: pointer; white-space: nowrap">◐ dark</button>
+</header>
+
+<section style="padding: clamp(36px, 6vw, 56px) clamp(18px, 4vw, 32px) clamp(24px, 4vw, 32px); display: flex; flex-direction: column; gap: 14px; border-bottom: 1px solid rgba(21,23,28,0.18)">
+<div style="font-family: 'IBM Plex Mono', monospace; font-size: 14px; color: #5A5F6B"><span style="color: #2457C5">arik@site</span>:~$ ls reading/</div>
+<h1 style="margin: 0; font-size: clamp(34px, 5vw, 48px); line-height: 1.05; font-weight: 500; letter-spacing: -0.03em">Links worth keeping.</h1>
+<p style="margin: 0; font-size: 17px; line-height: 1.6; color: #3A3E47; max-width: 560px">Articles, tools and references. Some come with a note.</p>
+</section>
+
+<div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; padding: 16px clamp(18px, 4vw, 32px); border-bottom: 1px solid #15171C">
+<div role="group" aria-label="Filter by tag" style="display: flex; flex-wrap: wrap; gap: 6px">
+
+<button type="button" aria-pressed="true" style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.04em; padding: 0 12px; min-height: 34px; cursor: pointer; background: #15171C; color: #F3F1EC; border: 1px solid #15171C">*</button>
+
+<button type="button" aria-pressed="false" style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.04em; padding: 0 12px; min-height: 34px; cursor: pointer; background: transparent; color: #15171C; border: 1px solid rgba(21,23,28,0.18)">agents</button>
+
+<button type="button" aria-pressed="false" style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.04em; padding: 0 12px; min-height: 34px; cursor: pointer; background: transparent; color: #15171C; border: 1px solid rgba(21,23,28,0.18)">ml</button>
+
+<button type="button" aria-pressed="false" style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.04em; padding: 0 12px; min-height: 34px; cursor: pointer; background: transparent; color: #15171C; border: 1px solid rgba(21,23,28,0.18)">design</button>
+
+<button type="button" aria-pressed="false" style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.04em; padding: 0 12px; min-height: 34px; cursor: pointer; background: transparent; color: #15171C; border: 1px solid rgba(21,23,28,0.18)">tools</button>
+
+<button type="button" aria-pressed="false" style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.04em; padding: 0 12px; min-height: 34px; cursor: pointer; background: transparent; color: #15171C; border: 1px solid rgba(21,23,28,0.18)">maps</button>
+
+<button type="button" aria-pressed="false" style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.04em; padding: 0 12px; min-height: 34px; cursor: pointer; background: transparent; color: #15171C; border: 1px solid rgba(21,23,28,0.18)">work</button>
+
+</div>
+<div style="display: flex; align-items: center; gap: 10px; font-family: 'IBM Plex Mono', monospace; font-size: 12px; flex: 0 1 260px; min-width: 200px">
+<label for="grep" style="color: #5A5F6B; letter-spacing: 0.06em">grep</label>
+<input id="grep" type="search" value="" placeholder="search links…" style="flex: 1; min-width: 0; font-family: inherit; font-size: 13px; height: 34px; padding: 0 10px; background: transparent; color: #15171C; border: 1px solid rgba(21,23,28,0.18); border-radius: 0; box-sizing: border-box">
+</div>
+</div>
+<div style="padding: 10px clamp(18px, 4vw, 32px); border-bottom: 1px solid rgba(21,23,28,0.18); font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #5A5F6B">8 items</div>
+
+<div>
+
+<div style="padding: 22px clamp(18px, 4vw, 32px); border-bottom: 1px solid rgba(21,23,28,0.10); display: flex; flex-direction: column; gap: 6px">
+<div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 16px">
+<a href="#" style="display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; min-width: 0">
+<span style="font-size: clamp(17px, 1.8vw, 20px); font-weight: 500; letter-spacing: -0.01em">Getting started with Claude Code mods</span>
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #5A5F6B">claude.dev ↗</span>
+</a>
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.06em; color: #5A5F6B">#agents</span>
+</div>
+<span style="font-size: 15px; line-height: 1.55; color: #3A3E47; max-width: 720px">Hooks that ship inside plugins and draw their own UI in the terminal, built from an empty folder.</span>
+
+<div style="position: relative; margin-top: 8px; max-width: 640px; background: #F8EDBE; padding: 12px 34px 12px 16px; clip-path: polygon(0 0, calc(100% - 18px) 0, 100% 18px, 100% 100%, 0 100%); box-sizing: border-box">
+<span aria-hidden="true" style="position: absolute; top: 0; right: 0; width: 18px; height: 18px; background: #E2CF84; clip-path: polygon(0 0, 0 100%, 100% 100%)"></span>
+<span style="font-size: 15px; line-height: 1.55; font-style: italic; color: #3B300A">The article layout here is the reference for my own posts.</span><span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #7A5D00; white-space: nowrap"> — A.</span>
+</div>
+
+</div>
+
+<div style="padding: 22px clamp(18px, 4vw, 32px); border-bottom: 1px solid rgba(21,23,28,0.10); display: flex; flex-direction: column; gap: 6px">
+<div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 16px">
+<a href="#" style="display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; min-width: 0">
+<span style="font-size: clamp(17px, 1.8vw, 20px); font-weight: 500; letter-spacing: -0.01em">Building effective agents</span>
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #5A5F6B">anthropic.com ↗</span>
+</a>
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.06em; color: #5A5F6B">#agents</span>
+</div>
+<span style="font-size: 15px; line-height: 1.55; color: #3A3E47; max-width: 720px">Simple, composable patterns beat heavy frameworks; when a workflow is enough and when you need an agent.</span>
+
+</div>
+
+<div style="padding: 22px clamp(18px, 4vw, 32px); border-bottom: 1px solid rgba(21,23,28,0.10); display: flex; flex-direction: column; gap: 6px">
+<div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 16px">
+<a href="#" style="display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; min-width: 0">
+<span style="font-size: clamp(17px, 1.8vw, 20px); font-weight: 500; letter-spacing: -0.01em">Making Software</span>
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #5A5F6B">makingsoftware.com ↗</span>
+</a>
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.06em; color: #5A5F6B">#design</span>
+</div>
+<span style="font-size: 15px; line-height: 1.55; color: #3A3E47; max-width: 720px">An illustrated manual on how everyday software and hardware actually works.</span>
+
+</div>
+
+<div style="padding: 22px clamp(18px, 4vw, 32px); border-bottom: 1px solid rgba(21,23,28,0.10); display: flex; flex-direction: column; gap: 6px">
+<div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 16px">
+<a href="#" style="display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; min-width: 0">
+<span style="font-size: clamp(17px, 1.8vw, 20px); font-weight: 500; letter-spacing: -0.01em">Sentinel-2 cloudless</span>
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #5A5F6B">s2maps.eu ↗</span>
+</a>
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.06em; color: #5A5F6B">#maps</span>
+</div>
+<span style="font-size: 15px; line-height: 1.55; color: #3A3E47; max-width: 720px">A cloud-free mosaic of the whole planet, served as map tiles.</span>
+
+<div style="position: relative; margin-top: 8px; max-width: 640px; background: #F8EDBE; padding: 12px 34px 12px 16px; clip-path: polygon(0 0, calc(100% - 18px) 0, 100% 18px, 100% 100%, 0 100%); box-sizing: border-box">
+<span aria-hidden="true" style="position: absolute; top: 0; right: 0; width: 18px; height: 18px; background: #E2CF84; clip-path: polygon(0 0, 0 100%, 100% 100%)"></span>
+<span style="font-size: 15px; line-height: 1.55; font-style: italic; color: #3B300A">The imagery behind the cockpit window project.</span><span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #7A5D00; white-space: nowrap"> — A.</span>
+</div>
+
+</div>
+
+<div style="padding: 22px clamp(18px, 4vw, 32px); border-bottom: 1px solid rgba(21,23,28,0.10); display: flex; flex-direction: column; gap: 6px">
+<div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 16px">
+<a href="#" style="display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; min-width: 0">
+<span style="font-size: clamp(17px, 1.8vw, 20px); font-weight: 500; letter-spacing: -0.01em">Zed</span>
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #5A5F6B">zed.dev ↗</span>
+</a>
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.06em; color: #5A5F6B">#tools</span>
+</div>
+<span style="font-size: 15px; line-height: 1.55; color: #3A3E47; max-width: 720px">A fast, collaborative code editor.</span>
+
+<div style="position: relative; margin-top: 8px; max-width: 640px; background: #F8EDBE; padding: 12px 34px 12px 16px; clip-path: polygon(0 0, calc(100% - 18px) 0, 100% 18px, 100% 100%, 0 100%); box-sizing: border-box">
+<span aria-hidden="true" style="position: absolute; top: 0; right: 0; width: 18px; height: 18px; background: #E2CF84; clip-path: polygon(0 0, 0 100%, 100% 100%)"></span>
+<span style="font-size: 15px; line-height: 1.55; font-style: italic; color: #3B300A">The editor I write in.</span><span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #7A5D00; white-space: nowrap"> — A.</span>
+</div>
+
+</div>
+
+<div style="padding: 22px clamp(18px, 4vw, 32px); border-bottom: 1px solid rgba(21,23,28,0.10); display: flex; flex-direction: column; gap: 6px">
+<div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 16px">
+<a href="#" style="display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; min-width: 0">
+<span style="font-size: clamp(17px, 1.8vw, 20px); font-weight: 500; letter-spacing: -0.01em">The Bitter Lesson</span>
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #5A5F6B">incompleteideas.net ↗</span>
+</a>
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.06em; color: #5A5F6B">#ml</span>
+</div>
+<span style="font-size: 15px; line-height: 1.55; color: #3A3E47; max-width: 720px">General methods that scale with compute keep winning over hand-built cleverness.</span>
+
+</div>
+
+<div style="padding: 22px clamp(18px, 4vw, 32px); border-bottom: 1px solid rgba(21,23,28,0.10); display: flex; flex-direction: column; gap: 6px">
+<div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 16px">
+<a href="#" style="display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; min-width: 0">
+<span style="font-size: clamp(17px, 1.8vw, 20px); font-weight: 500; letter-spacing: -0.01em">Software 2.0</span>
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #5A5F6B">karpathy.medium.com ↗</span>
+</a>
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.06em; color: #5A5F6B">#ml</span>
+</div>
+<span style="font-size: 15px; line-height: 1.55; color: #3A3E47; max-width: 720px">Neural networks as a new kind of software, written by optimization rather than by hand.</span>
+
+</div>
+
+<div style="padding: 22px clamp(18px, 4vw, 32px); border-bottom: 1px solid rgba(21,23,28,0.10); display: flex; flex-direction: column; gap: 6px">
+<div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 16px">
+<a href="#" style="display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; min-width: 0">
+<span style="font-size: clamp(17px, 1.8vw, 20px); font-weight: 500; letter-spacing: -0.01em">Maker’s Schedule, Manager’s Schedule</span>
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #5A5F6B">paulgraham.com ↗</span>
+</a>
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.06em; color: #5A5F6B">#work</span>
+</div>
+<span style="font-size: 15px; line-height: 1.55; color: #3A3E47; max-width: 720px">Why one meeting can wreck an afternoon of building.</span>
+
+</div>
+
+</div>
+
+<footer style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px 16px; padding: 24px clamp(18px, 4vw, 32px) 36px; border-top: 1px solid #15171C; font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.04em; color: #5A5F6B">
+<span>░░░░░░ © 2026 Arik · built from markdown</span>
+<span style="display: flex; gap: 20px"><a href="https://github.com/Arlever">github ↗</a></span>
+</footer>
+
+</div>
+</div>
+
+</body>
+</html>

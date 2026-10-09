@@ -1,0 +1,15 @@
+{
+  "goals": [
+    { "text": "cockpit-window v1 on device", "done": true },
+    { "text": "order servos for the gimbal", "done": true },
+    { "text": "print the gimbal ring", "done": false },
+    { "text": "publish first build log", "done": false },
+    { "text": "wiki reachable over MCP", "done": true }
+  ],
+  "agents": [
+    { "name": "site-agent", "state": "running", "task": "filing new links" },
+    { "name": "wiki-agent", "state": "active", "task": "indexing notes" },
+    { "name": "build", "state": "idle", "task": "idle · last deploy [TIME]" }
+  ],
+  "updated": "2026-10-10T08:00:00Z"
+}

@@ -1,0 +1,30 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { domainOf } from '../lib/site';
+import Note from './Note.astro';
+interface Props { link: CollectionEntry<'reading'>; full?: boolean }
+const { link, full = false } = Astro.props;
+const { url, title, description, tag, note } = link.data;
+const domain = domainOf(url);
+const anchor = { class: 'link-a', href: url, rel: 'noopener' };
+---
+{full ? (
+  <div
+    class="link-item lg"
+    data-tag={tag}
+    data-search={[title, description, domain, note ?? ''].join(' ').toLowerCase()}
+  >
+    <div class="link-top">
+      <a {...anchor}><span class="link-title">{title}</span><span class="domain">{domain} ↗</span></a>
+      <span class="link-tag">#{tag}</span>
+    </div>
+    <span class="link-desc">{description}</span>
+    {note && <Note text={note} />}
+  </div>
+) : (
+  <div class="link-item">
+    <a {...anchor}><span class="link-title">{title}</span><span class="domain">{domain} ↗</span></a>
+    <span class="link-desc">{description}</span>
+    {note && <Note text={note} />}
+  </div>
+)}

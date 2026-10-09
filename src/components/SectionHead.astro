@@ -1,0 +1,9 @@
+---
+import { url } from '../lib/site';
+interface Props { num: string; path: string; href: string; linkLabel: string }
+const { num, path, href, linkLabel } = Astro.props;
+---
+<div class="section-head">
+  <h2><span class="num-tag">{num}</span>{path}</h2>
+  <a class="all-link" href={url(href)}>{linkLabel} →</a>
+</div>

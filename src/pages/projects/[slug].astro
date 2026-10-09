@@ -1,0 +1,35 @@
+---
+import { render } from 'astro:content';
+import Article from '../../layouts/Article.astro';
+import { SITE } from '../../site.config';
+import { getProjects, getPosts, readingTime, postLabel } from '../../lib/site';
+
+export async function getStaticPaths() {
+  const projects = await getProjects();
+  return projects.map((project) => ({ params: { slug: project.id }, props: { project } }));
+}
+
+const { project } = Astro.props;
+const { title, summary, status } = project.data;
+const { Content, headings } = await render(project);
+const posts = (await getPosts()).filter((p) => p.data.project?.id === project.id);
+---
+<Article
+  title={title}
+  dek={summary}
+  path={[{ label: 'projects', href: '/projects/' }, { label: `${project.id}.md` }]}
+  crumbs={{ section: { label: 'Projects', href: '/projects/' }, parts: [] }}
+  meta={[
+    { k: 'AUTHOR', v: SITE.author },
+    { k: 'STATUS', v: status, chip: status },
+    { k: 'READING TIME', v: readingTime(project.body) },
+    posts[0]
+      ? { k: 'BUILD LOG', v: `${posts.length} ${posts.length === 1 ? 'post' : 'posts'} →`, href: `/writing/${posts[0].id}/` }
+      : { k: 'BUILD LOG', v: '—' },
+  ]}
+  headings={headings}
+  related={posts.map((p) => ({ label: postLabel(p), title: p.data.title, href: `/writing/${p.id}/` }))}
+  editPath={`src/content/projects/${project.id}.md`}
+>
+  <Content />
+</Article>

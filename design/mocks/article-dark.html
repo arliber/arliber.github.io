@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Arik — Article</title>
+<!-- STATIC REFERENCE MOCK rendered from design/source/Article.dc.html (dark theme). Interactivity is specified in HANDOVER.md, not implemented here. -->
+
+<link rel="stylesheet" href="../fonts/plex.css">
+<style>
+body{margin:0}
+a{color:inherit;text-decoration:none}a:hover{text-decoration:underline;text-underline-offset:4px}
+@keyframes dcblink{50%{opacity:0}}
+</style>
+
+</head>
+<body>
+
+<div style="min-height: 100vh; background: #101114; color: #ECE9E2; font-family: 'IBM Plex Sans', 'Helvetica Neue', sans-serif; padding: 0 clamp(0px, 2vw, 16px); box-sizing: border-box">
+<div style="max-width: 1120px; margin: 0 auto; border-left: 1px solid rgba(236,233,226,0.16); border-right: 1px solid rgba(236,233,226,0.16); min-height: 100vh">
+
+<header style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px clamp(18px, 4vw, 32px); border-bottom: 1px solid rgba(236,233,226,0.55); font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12px; letter-spacing: 0.04em">
+<div style="display: flex; align-items: center; gap: 14px; min-width: 0">
+<span aria-hidden="true" style="display: flex; gap: 6px"><span style="width: 10px; height: 10px; border: 1px solid #ECE9E2"></span><span style="width: 10px; height: 10px; border: 1px solid #ECE9E2"></span><span style="width: 10px; height: 10px; background: #ECE9E2"></span></span>
+<span style="color: #8E929C; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">arik@site: <a href="home-dark.html" style="color: #7797db">~</a>/<a href="writing-dark.html">writing</a>/cockpit-window.md</span>
+</div>
+<button type="button" aria-pressed="true" style="font: inherit; letter-spacing: inherit; text-transform: uppercase; background: transparent; color: #ECE9E2; border: 1px solid #ECE9E2; padding: 0 12px; min-height: 32px; cursor: pointer; white-space: nowrap">◑ light</button>
+</header>
+
+<section style="padding: clamp(40px, 6vw, 64px) clamp(18px, 4vw, 32px) clamp(32px, 5vw, 48px); display: flex; flex-direction: column; align-items: center; text-align: center; gap: 22px; border-bottom: 1px solid rgba(236,233,226,0.16)">
+<div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: #8E929C"><a href="writing-dark.html">Writing</a> ／ Hardware ／ <span style="color: #d47a55">Draft</span></div>
+<h1 style="margin: 0; font-size: clamp(34px, 5vw, 56px); line-height: 1.06; font-weight: 500; letter-spacing: -0.035em; max-width: 820px">Cockpit window: streaming satellite tiles to an ESP32</h1>
+<p style="margin: 0; font-size: clamp(17px, 1.8vw, 19px); line-height: 1.55; color: #B9B6AE; max-width: 640px">How a joystick, a small M5Stack screen and a cloudless mosaic of Earth turned into the view from a space shuttle.</p>
+</section>
+
+<div style="display: flex; flex-wrap: wrap; gap: 1px; background: rgba(236,233,226,0.16); border-bottom: 1px solid rgba(236,233,226,0.55); font-family: 'IBM Plex Mono', monospace">
+<div style="flex: 1 1 150px; background: #101114; padding: 16px clamp(18px, 3vw, 32px); display: flex; flex-direction: column; gap: 4px"><span style="font-size: 11px; letter-spacing: 0.08em; color: #8E929C">AUTHOR</span><span style="font-size: 14px">Arik</span></div>
+<div style="flex: 1 1 150px; background: #101114; padding: 16px clamp(18px, 3vw, 32px); display: flex; flex-direction: column; gap: 4px"><span style="font-size: 11px; letter-spacing: 0.08em; color: #8E929C">PUBLISHED</span><span style="font-size: 14px">[DATE]</span></div>
+<div style="flex: 1 1 150px; background: #101114; padding: 16px clamp(18px, 3vw, 32px); display: flex; flex-direction: column; gap: 4px"><span style="font-size: 11px; letter-spacing: 0.08em; color: #8E929C">READING TIME</span><span style="font-size: 14px">8 min</span></div>
+<div style="flex: 1 1 150px; background: #101114; padding: 16px clamp(18px, 3vw, 32px); display: flex; flex-direction: column; gap: 4px"><span style="font-size: 11px; letter-spacing: 0.08em; color: #8E929C">PROJECT</span><a href="home-dark.html" style="font-size: 14px; color: #7797db">Cockpit Window →</a></div>
+</div>
+
+<div style="display: flex; flex-wrap: wrap; border-bottom: 1px solid rgba(236,233,226,0.55)">
+<aside style="flex: 1 1 240px; max-width: 100%; padding: clamp(28px, 4vw, 40px) clamp(18px, 3vw, 28px); border-right: 1px solid rgba(236,233,226,0.16); border-bottom: 1px solid rgba(236,233,226,0.09); font-family: 'IBM Plex Mono', monospace; font-size: 12.5px; display: flex; flex-direction: column; gap: 28px; box-sizing: border-box">
+<div style="display: flex; flex-direction: column; gap: 12px">
+<span style="font-size: 11px; letter-spacing: 0.08em; color: #8E929C">TREE</span>
+<nav aria-label="Contents" style="display: flex; flex-direction: column; gap: 9px; line-height: 1.4">
+<a href="#idea" style="color: #7797db">└ The idea</a>
+<a href="#hardware">└ Hardware</a>
+<a href="#tiles">└ Finding the tiles</a>
+<a href="#steering">└ Steering the view</a>
+<a href="#agent">└ Handing it to an agent</a>
+</nav>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<span style="font-size: 13px; letter-spacing: -0.02em; white-space: nowrap; overflow: hidden"><span style="color: #7797db">▓▓▓▓▓▓▓</span><span style="color: #8E929C">░░░░░░░░░░░░░</span></span>
+<span style="font-size: 11px; letter-spacing: 0.08em; color: #8E929C">34% · PRESS ↑ / ↓ TO SCROLL</span>
+</div>
+</aside>
+
+<article style="flex: 999 1 560px; min-width: 0; padding: clamp(28px, 4vw, 40px) clamp(18px, 4vw, 32px) 72px; display: flex; flex-direction: column; align-items: center; box-sizing: border-box">
+<div style="max-width: 680px; width: 100%; display: flex; flex-direction: column; gap: 22px; font-size: clamp(17px, 1.6vw, 18px); line-height: 1.7; color: #D6D3CB">
+<p style="margin: 0">I wanted a small screen that shows Earth from above, with a joystick to move around. It didn't need to be live — yesterday's imagery or last year's is fine. What mattered was the feeling of looking out of a window.</p>
+<p style="margin: 0">My first instinct was a whole-globe view. Then it clicked: this is the view from a space shuttle cockpit. Ground scrolling past the window, a little globe in the corner showing where you are.</p>
+
+<h2 id="idea" style="margin: 28px 0 0; font-family: 'IBM Plex Mono', monospace; font-size: 14px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; display: flex; align-items: center; gap: 14px; color: #ECE9E2"><span style="color: #8E929C">01</span>The idea<span style="flex: 1; height: 1px; background: rgba(236,233,226,0.16)"></span></h2>
+<p style="margin: 0">The device is an ESP32 driving an M5Stack-sized display. The joystick doesn't move a map; it moves the shuttle. The screen shows what's below.</p>
+
+<figure style="margin: 8px 0; display: flex; flex-direction: column; gap: 10px">
+<div style="height: clamp(200px, 26vw, 300px); border: 1px solid rgba(236,233,226,0.16); display: flex; align-items: center; justify-content: center; background-image: repeating-linear-gradient(135deg, rgba(236,233,226,0.09) 0 1px, transparent 1px 7px)"><span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.08em; color: #8E929C; background: #101114; padding: 4px 8px">[ PHOTO — DEVICE ON THE DESK ]</span></div>
+<figcaption style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #8E929C; line-height: 1.5"><strong style="color: #ECE9E2; font-weight: 600">FIG A</strong>  The cockpit window running on the ESP32</figcaption>
+</figure>
+
+<h2 id="hardware" style="margin: 28px 0 0; font-family: 'IBM Plex Mono', monospace; font-size: 14px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; display: flex; align-items: center; gap: 14px; color: #ECE9E2"><span style="color: #8E929C">02</span>Hardware<span style="flex: 1; height: 1px; background: rgba(236,233,226,0.16)"></span></h2>
+<div style="overflow-x: auto; border: 1px solid rgba(236,233,226,0.16)">
+<table style="width: 100%; border-collapse: collapse; font-size: 15px; line-height: 1.5">
+<thead><tr style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.08em; text-align: left; color: #8E929C"><th style="padding: 10px 14px; border-bottom: 1px solid rgba(236,233,226,0.16); font-weight: 500">PART</th><th style="padding: 10px 14px; border-bottom: 1px solid rgba(236,233,226,0.16); font-weight: 500">ROLE</th></tr></thead>
+<tbody>
+<tr><td style="padding: 10px 14px; border-bottom: 1px solid rgba(236,233,226,0.09); font-family: 'IBM Plex Mono', monospace; font-size: 13px; white-space: nowrap">M5Stack Core</td><td style="padding: 10px 14px; border-bottom: 1px solid rgba(236,233,226,0.09)">The window — screen, ESP32 and Wi-Fi in one box</td></tr>
+<tr><td style="padding: 10px 14px; border-bottom: 1px solid rgba(236,233,226,0.09); font-family: 'IBM Plex Mono', monospace; font-size: 13px">Joystick</td><td style="padding: 10px 14px; border-bottom: 1px solid rgba(236,233,226,0.09)">Flies the shuttle over the ground</td></tr>
+<tr><td style="padding: 10px 14px; font-family: 'IBM Plex Mono', monospace; font-size: 13px">[PART]</td><td style="padding: 10px 14px">[ROLE]</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2 id="tiles" style="margin: 28px 0 0; font-family: 'IBM Plex Mono', monospace; font-size: 14px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; display: flex; align-items: center; gap: 14px; color: #ECE9E2"><span style="color: #8E929C">03</span>Finding the tiles<span style="flex: 1; height: 1px; background: rgba(236,233,226,0.16)"></span></h2>
+<p style="margin: 0">Because freshness doesn't matter, a cloudless mosaic is the perfect source. I'm using <a href="#" style="color: #7797db; text-decoration: underline; text-underline-offset: 3px">EOX's Sentinel-2 Cloudless</a> tiles: the whole planet, no clouds, served as standard map tiles.</p>
+
+<div style="border: 1px solid rgba(236,233,226,0.16)">
+<div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 14px; border-bottom: 1px solid rgba(236,233,226,0.16); font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.08em; color: #8E929C"><span><strong style="color: #ECE9E2; font-weight: 600">CODE</strong>  C++</span><button type="button" style="font: inherit; letter-spacing: inherit; background: none; border: 1px solid rgba(236,233,226,0.16); padding: 4px 10px; color: #ECE9E2; cursor: pointer; min-height: 28px">COPY</button></div>
+<pre style="margin: 0; padding: 18px; background: #17181C; color: #ECE9E2; font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; line-height: 1.65; overflow-x: auto; white-space: pre"><span style="color: #8E929C">// Which slippy-map tile is under the shuttle?</span>
+int tileX(double lon, int z) {
+  return floor((lon + 180.0) / 360.0 * (1 &lt;&lt; z));
+}
+int tileY(double lat, int z) {
+  double r = lat * M_PI / 180.0;
+  return floor((1.0 - log(tan(r) + 1.0 / cos(r)) / M_PI) / 2.0 * (1 &lt;&lt; z));
+}</pre>
+</div>
+
+<div style="border: 1px solid #ECE9E2; padding: 18px 20px; display: flex; flex-direction: column; gap: 6px; background: #17181C">
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.08em; color: #d47a55">▲ NOTE</span>
+<span style="font-size: 16px; line-height: 1.6">Single-width symbols — ▲ ░ └ → — line up in every monospace font. Emoji don't.</span>
+</div>
+
+<h2 id="steering" style="margin: 28px 0 0; font-family: 'IBM Plex Mono', monospace; font-size: 14px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; display: flex; align-items: center; gap: 14px; color: #ECE9E2"><span style="color: #8E929C">04</span>Steering the view<span style="flex: 1; height: 1px; background: rgba(236,233,226,0.16)"></span></h2>
+<p style="margin: 0">[Section in progress — the agent leaves a placeholder until I write it.]</p>
+
+<h2 id="agent" style="margin: 28px 0 0; font-family: 'IBM Plex Mono', monospace; font-size: 14px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; display: flex; align-items: center; gap: 14px; color: #ECE9E2"><span style="color: #8E929C">05</span>Handing it to an agent<span style="flex: 1; height: 1px; background: rgba(236,233,226,0.16)"></span></h2>
+<p style="margin: 0">I wrote the plan as a handover <code style="font-family: 'IBM Plex Mono', monospace; font-size: 0.88em; background: #17181C; border: 1px solid rgba(236,233,226,0.16); padding: 1px 5px">.md</code> and gave the implementation to a Claude Code agent. The handover file turned out to be the most useful artifact of the whole project.</p>
+</div>
+</article>
+</div>
+
+<section style="border-bottom: 1px solid rgba(236,233,226,0.55)">
+<div style="padding: 40px clamp(18px, 4vw, 32px) 20px"><h2 style="margin: 0; font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase"><span style="color: #8E929C">── </span>Related</h2></div>
+<div style="border-top: 1px solid rgba(236,233,226,0.16)">
+<a href="#" style="display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 28px; padding: 18px clamp(18px, 4vw, 32px); border-bottom: 1px solid rgba(236,233,226,0.09)"><span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #8E929C; width: 90px">DRAFT</span><span style="flex: 1 1 320px; font-size: clamp(17px, 1.8vw, 19px); font-weight: 500">Building a mission-control panel out of a CoreS3</span><span style="font-family: 'IBM Plex Mono', monospace">→</span></a>
+<a href="#" style="display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 28px; padding: 18px clamp(18px, 4vw, 32px)"><span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #8E929C; width: 90px">DRAFT</span><span style="flex: 1 1 320px; font-size: clamp(17px, 1.8vw, 19px); font-weight: 500">A ring gimbal for a space shuttle model</span><span style="font-family: 'IBM Plex Mono', monospace">→</span></a>
+</div>
+</section>
+
+<footer style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px 16px; padding: 24px clamp(18px, 4vw, 32px) 36px; font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.04em; color: #8E929C">
+<span>░░░░░░ © 2026 Arik · built from markdown</span>
+<span style="display: flex; gap: 20px"><a href="https://github.com/Arlever">github ↗</a><a href="#">edit this page (.md)</a></span>
+</footer>
+
+</div>
+</div>
+
+</body>
+</html>

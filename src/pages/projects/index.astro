@@ -1,0 +1,16 @@
+---
+import Base from '../../layouts/Base.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import { getProjects } from '../../lib/site';
+const projects = await getProjects();
+---
+<Base title="Arik — Projects" path={[{ label: 'projects' }]}>
+  <section class="intro">
+    <div class="prompt"><span>arik@site</span>:~$ ls projects/</div>
+    <h1>Things I’m building.</h1>
+    <p>Hardware, software and the odd model kit — each with its own build log.</p>
+  </section>
+  <div class="grid rule-strong">
+    {projects.map((p) => <ProjectCard project={p} heading="h2" />)}
+  </div>
+</Base>
