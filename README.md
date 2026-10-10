@@ -4,7 +4,7 @@ Arik's public notebook of projects, writing and reading. It's a static [Astro](h
 
 ```sh
 npm install
-npm run dev       # http://localhost:4321/site/  (drafts visible)
+npm run dev       # http://localhost:4321/  (drafts visible)
 npm run build     # astro check + static build to dist/ (drafts hidden)
 PUBLIC_SHOW_DRAFTS=true npm run build   # build including drafts
 ```

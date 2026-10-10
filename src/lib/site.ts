@@ -3,7 +3,7 @@ import { SITE } from '../site.config';
 
 const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
 
-/** Prefix an absolute site path with the deploy base (`/site`). */
+/** Prefix an absolute site path with the deploy base (`base` in astro.config.mjs). */
 export const url = (path = '/') => BASE + path;
 
 export const domainOf = (href: string) => new URL(href).hostname.replace(/^www\./, '');

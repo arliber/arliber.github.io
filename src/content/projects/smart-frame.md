@@ -8,7 +8,7 @@ order: 6
 
 A picture frame where part of the picture is alive. An e-ink display sits behind a cutout in the canvas, framed by an outline that is part of the artwork itself.
 
-::figure[The first sketch]{src="/site/img/projects/smart-frame-sketch.jpg" alt="Hand-drawn sketch of a picture frame with a cutout showing a clock, with notes on components"}
+::figure[The first sketch]{src="/img/projects/smart-frame-sketch.jpg" alt="Hand-drawn sketch of a picture frame with a cutout showing a clock, with notes on components"}
 
 ## Components
 

@@ -1,19 +1,19 @@
 # site — Arik's public notebook
 
 Astro static site (projects, writing, reading), deployed to GitHub Pages from `main`.
-Live: https://arliber.github.io/site/ · Design spec: `design/HANDOVER.md` · Mocks: `design/mocks/`.
+Live: https://arliber.github.io/ · Design spec: `design/HANDOVER.md` · Mocks: `design/mocks/`.
 
 ## Where things live
 
 - `src/content/projects/<slug>.md` — project cards + project pages
 - `src/content/writing/<slug>.md` — posts (`draft: true` hides it from the production build)
 - `src/content/reading/<yyyy>/<slug>.md` — saved links (articles, books, podcasts, videos); optional `note` renders as the folded-paper note
-- `public/img/` — images. Strip EXIF/GPS from phone photos before committing; reference them as `/img/...` in frontmatter and `/site/img/...` in markdown bodies
+- `public/img/` — images. Strip EXIF/GPS from phone photos before committing; reference them as `/img/...` everywhere
 - `src/data/status.json` — the home-page `status.live` dashboard (goals + agents)
 - Schemas: `src/content.config.ts`. Site constants (time zone, links): `src/site.config.ts`.
 
 Markdown extras for writing/projects: `:::note … :::` callout, and
-`::figure[Caption]{src="/site/…" alt="…"}` or `::figure[Caption]{placeholder="PHOTO — …"}`.
+`::figure[Caption]{src="/img/…" alt="…"}` or `::figure[Caption]{placeholder="PHOTO — …"}`.
 `## Headings` are auto-numbered and feed the article's TREE.
 
 ## Agent operating rules
