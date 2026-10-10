@@ -1,0 +1,76 @@
+---
+// 12×12 pixel-art glyphs for reading-list item types, drawn as crisp SVG rects in currentColor.
+import type { READING_TYPES } from '../content.config';
+
+type Kind = (typeof READING_TYPES)[number];
+interface Props { type: Kind }
+
+const GLYPHS: Record<Kind, string[]> = {
+  article: [
+    '.#######....',
+    '.#.....##...',
+    '.#.....#.#..',
+    '.#.....####.',
+    '.#.###....#.',
+    '.#........#.',
+    '.#.######.#.',
+    '.#........#.',
+    '.#.######.#.',
+    '.#........#.',
+    '.#.####...#.',
+    '.##########.',
+  ],
+  book: [
+    '..#########.',
+    '.#.#......#.',
+    '.#.#.####.#.',
+    '.#.#......#.',
+    '.#.#.###..#.',
+    '.#.#......#.',
+    '.#.#......#.',
+    '.#.#......#.',
+    '.#.########.',
+    '.#.#.......#',
+    '.#..#######.',
+    '..##........',
+  ],
+  podcast: [
+    '....####....',
+    '...#....#...',
+    '...#.##.#...',
+    '...#....#...',
+    '...#.##.#...',
+    '...#....#...',
+    '.#..####..#.',
+    '.#........#.',
+    '..#......#..',
+    '...######...',
+    '.....##.....',
+    '...######...',
+  ],
+  video: [
+    '############',
+    '#..........#',
+    '#...#......#',
+    '#...##.....#',
+    '#...###....#',
+    '#...####...#',
+    '#...###....#',
+    '#...##.....#',
+    '#...#......#',
+    '#..........#',
+    '############',
+    '..#......#..',
+  ],
+};
+
+const { type } = Astro.props;
+const rects = GLYPHS[type].flatMap((row, y) =>
+  [...row].flatMap((c, x) => (c === '#' ? [{ x, y }] : [])),
+);
+const label = type[0].toUpperCase() + type.slice(1);
+---
+<svg class="type-icon" viewBox="0 0 12 12" width="24" height="24" role="img" aria-label={label} shape-rendering="crispEdges">
+  <title>{label}</title>
+  {rects.map(({ x, y }) => <rect x={x} y={y} width="1" height="1" />)}
+</svg>

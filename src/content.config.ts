@@ -28,12 +28,15 @@ const writing = defineCollection({
 });
 
 // Extend this list to add a tag; the Reading filters are built from it.
-export const READING_TAGS = ['agents', 'ml', 'design', 'tools', 'maps', 'work'] as const;
+export const READING_TAGS = ['agents', 'ml', 'design', 'tools', 'hardware', 'space', 'science', 'maps', 'work'] as const;
+// Each type gets its own pixel icon (src/components/TypeIcon.astro).
+export const READING_TYPES = ['article', 'book', 'podcast', 'video'] as const;
 
 const reading = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/reading' }),
   schema: z.object({
     url: z.url(),
+    type: z.enum(READING_TYPES).default('article'),
     title: z.string(),
     description: z.string(),
     tag: z.enum(READING_TAGS),

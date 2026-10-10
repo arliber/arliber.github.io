@@ -3,7 +3,7 @@ export const SITE = {
   author: 'Arik',
   // Dashboard clock time zone (IANA name). Set to your own zone.
   timeZone: 'Asia/Jerusalem',
-  github: 'https://github.com/Arlever',
+  github: 'https://github.com/arliber',
   repo: 'https://github.com/arliber/site',
   branch: 'main',
   // Drafts are listed in `astro dev` but hidden from the production build.
