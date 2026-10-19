@@ -4,6 +4,7 @@ export const SITE = {
   // Dashboard clock time zone (IANA name). Set to your own zone.
   timeZone: 'Asia/Jerusalem',
   github: 'https://github.com/arliber',
+  linkedin: 'https://www.linkedin.com/in/arikliber/',
   repo: 'https://github.com/arliber/arliber.github.io',
   branch: 'main',
   // Drafts are listed in `astro dev` but hidden from the production build.

@@ -9,7 +9,9 @@ const { path = [] } = Astro.props;
 ---
 <header class="titlebar">
   <div class="titlebar-left">
-    <span class="lights" aria-hidden="true"><span></span><span></span><span></span></span>
+    {path.length === 0
+      ? <span class="lights" aria-hidden="true"><span></span><span></span><span></span></span>
+      : <a class="lights" href={url('/')} aria-label="Back to home" title="Home"><span></span><span></span><span></span></a>}
     <span class="path">arik@site: {path.length === 0 ? '~ — zsh' : (
       <><a class="home" href={url('/')}>~</a>{path.map((s) => <>/{s.href ? <a href={url(s.href)}>{s.label}</a> : s.label}</>)}</>
     )}</span>

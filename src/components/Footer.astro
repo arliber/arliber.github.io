@@ -11,6 +11,7 @@ const year = new Date().getFullYear();
 <footer class:list={['footer', { ruled }]}>
   <span>░░░░░░ © {year} {SITE.author} · built from markdown</span>
   <span class="footer-links">
+    <a href={SITE.linkedin}>linkedin ↗</a>
     <a href={SITE.github}>github ↗</a>
     {editPath && <a href={`${SITE.repo}/edit/${SITE.branch}/${editPath}`}>edit this page (.md)</a>}
   </span>

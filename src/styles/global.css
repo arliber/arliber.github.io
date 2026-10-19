@@ -118,6 +118,9 @@ a:hover { text-decoration: underline; text-underline-offset: 4px; }
 .lights { display: flex; gap: 6px; }
 .lights span { width: 10px; height: 10px; border: 1px solid var(--ink); }
 .lights span:last-child { border: 0; background: var(--ink); }
+/* off home the squares link back to ~; hovering fills them all */
+a.lights { padding: 6px; margin: -6px; }
+a.lights:hover span { background: var(--accent); border-color: var(--accent); }
 .path { color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .path .home { color: var(--accent); }
 .theme-toggle {
@@ -342,6 +345,31 @@ a:hover { text-decoration: underline; text-underline-offset: 4px; }
   background: transparent; color: var(--ink); border: 1px solid var(--line); border-radius: 0;
 }
 .count { padding: 10px var(--pad); border-bottom: 1px solid var(--line); font-family: var(--mono); font-size: 12px; color: var(--muted); }
+
+/* ── inspiration board ────────────────────────────────── */
+
+.board { columns: 3 260px; column-gap: 12px; padding: 12px var(--pad) 24px; }
+.shot { display: block; margin-bottom: 12px; break-inside: avoid; border: 1px solid var(--line); cursor: zoom-in; }
+.shot:hover { border-color: var(--ink); }
+.shot img { display: block; width: 100%; height: auto; }
+
+/* home preview: newest few, cropped to the project-card photo height */
+.strip { display: flex; flex-wrap: wrap; gap: 1px; background: var(--line); }
+.strip > a { flex: 1 1 220px; background: var(--bg); padding: 16px clamp(18px, 3vw, 28px); cursor: zoom-in; }
+.strip > a:hover .dither canvas, .strip > a:focus-visible .dither canvas { opacity: 0; }
+
+.lightbox {
+  max-width: none; max-height: none; width: 100vw; height: 100vh; margin: 0; padding: 0; border: 0;
+  background: transparent; cursor: zoom-out;
+}
+.lightbox[open] { display: flex; align-items: center; justify-content: center; }
+.lightbox::backdrop { background: rgba(16, 17, 20, 0.88); }
+.lightbox img { max-width: calc(100vw - 32px); max-height: calc(100vh - 80px); object-fit: contain; }
+.lightbox-close {
+  position: fixed; top: 16px; right: 16px; cursor: pointer;
+  font-family: var(--mono); font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase;
+  background: transparent; color: #ECE9E2; border: 1px solid #ECE9E2; padding: 0 12px; min-height: 32px;
+}
 
 /* ── article ──────────────────────────────────────────── */
 
