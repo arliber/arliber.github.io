@@ -5,6 +5,27 @@ import remarkDirective from 'remark-directive';
 import remarkBlocks from './src/plugins/remark-blocks.mjs';
 import rehypeBlocks from './src/plugins/rehype-blocks.mjs';
 
+// Bundle only the shader effects the site uses: swap shaders' all-effects registry
+// chunk for src/lib/shaders-registry.js. Fails the build if an upgrade renames it.
+/** @returns {import('vite').Plugin} */
+function slimShaders() {
+  const stub = decodeURIComponent(new URL('./src/lib/shaders-registry.js', import.meta.url).pathname);
+  let swapped = false;
+  return {
+    name: 'slim-shaders',
+    enforce: 'pre',
+    resolveId(id, importer) {
+      if (importer?.includes('/node_modules/shaders/') && /\/shaderRegistry-[\w-]+\.js$/.test(id)) {
+        swapped = true;
+        return stub;
+      }
+    },
+    buildEnd() {
+      if (this.environment?.name === 'client' && !swapped) this.error('slim-shaders: registry chunk not found — update src/lib/shaders-registry.js for the new shaders version');
+    },
+  };
+}
+
 // User site (repo arliber/arliber.github.io), served from the domain root.
 const base = '/';
 
@@ -13,6 +34,7 @@ export default defineConfig({
   base,
   trailingSlash: 'always',
   output: 'static',
+  vite: { plugins: [slimShaders()] },
   markdown: {
     syntaxHighlight: false,
     processor: unified({

@@ -14,6 +14,7 @@
     "astro": "^7.3.8",
     "hastscript": "^9.0.1",
     "remark-directive": "^4.0.0",
+    "shaders": "4.0.4",
     "unist-util-visit": "^5.1.0"
   },
   "devDependencies": {

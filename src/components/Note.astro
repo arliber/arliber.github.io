@@ -4,3 +4,41 @@ interface Props { text: string }
 <div class="note">
   <span class="note-text">{Astro.props.text}</span><span class="note-sign"> — A.</span>
 </div>
+
+<script>
+  // Paper grain for the notes: one shader render, snapshotted to an image and
+  // shared by every note through --note-paper, so a page of notes costs one GPU pass.
+  import { hasWebGPU, mount, onThemeChange, token } from '../lib/shaders';
+
+  const W = 640, H = 480;
+  const root = document.documentElement;
+
+  async function paint() {
+    const canvas = Object.assign(document.createElement('canvas'), { width: W, height: H });
+    canvas.setAttribute('aria-hidden', 'true');
+    canvas.style.cssText = `position:fixed;left:0;top:0;opacity:0;z-index:-1;width:${W}px;height:${H}px;pointer-events:none`;
+    document.body.append(canvas);
+    const shader = await mount(canvas, {
+      components: [{
+        type: 'Paper',
+        props: { roughness: 0.7, grainScale: 1.2, displacement: 0.15, seed: 7 },
+        children: [{ type: 'SolidColor', props: { color: token('--note-bg') } }],
+      }],
+    }, () => requestAnimationFrame(() => {
+      // Copy the frame out while it's still the current texture.
+      const out = Object.assign(document.createElement('canvas'), { width: W, height: H });
+      out.getContext('2d')!.drawImage(canvas, 0, 0);
+      out.toBlob((blob) => {
+        if (blob) root.style.setProperty('--note-paper', `url(${URL.createObjectURL(blob)})`);
+        shader?.destroy();
+        canvas.remove();
+      });
+    }));
+    if (!shader) canvas.remove();
+  }
+
+  if (document.querySelector('.note') && hasWebGPU()) {
+    paint();
+    onThemeChange(() => { root.style.removeProperty('--note-paper'); paint(); });
+  }
+</script>

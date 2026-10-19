@@ -153,6 +153,17 @@ a:hover { text-decoration: underline; text-underline-offset: 4px; }
 }
 .placeholder-img { height: 168px; width: 100%; object-fit: cover; border: 1px solid var(--line); display: block; }
 
+/* dithered project photo (WebGPU only); the real photo shows on hover */
+.dither { position: relative; }
+.dither .placeholder-img { box-sizing: border-box; height: 170px; } /* same box as .placeholder */
+.dither canvas {
+  position: absolute; top: 1px; left: 1px;
+  opacity: 0; transition: opacity .35s ease; pointer-events: none;
+}
+.dither.is-dithered canvas { opacity: 1; }
+.card:hover .dither canvas, .card:focus-visible .dither canvas { opacity: 0; }
+@media (prefers-reduced-motion: reduce) { .dither canvas { transition: none; } }
+
 /* section header (home) */
 .section-head {
   display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px;
@@ -231,7 +242,7 @@ a:hover { text-decoration: underline; text-underline-offset: 4px; }
 
 .note {
   position: relative; margin-top: 8px; max-width: 640px;
-  background: var(--note-bg);
+  background: var(--note-bg) var(--note-paper, none);
   padding: 12px 34px 12px 16px;
   clip-path: polygon(0 0, calc(100% - 18px) 0, 100% 18px, 100% 100%, 0 100%);
 }

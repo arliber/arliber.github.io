@@ -4,10 +4,11 @@ import { url } from '../lib/site';
 interface Props { project: CollectionEntry<'projects'>; heading?: 'h2' | 'h3' }
 const { project, heading: H = 'h3' } = Astro.props;
 const { title, status, summary, image } = project.data;
+const src = image && (image.startsWith('/') ? url(image) : image);
 ---
 <a class="card" href={url(`/projects/${project.id}/`)}>
-  {image
-    ? <img class="placeholder-img" src={image.startsWith('/') ? url(image) : image} alt="" loading="lazy" />
+  {src
+    ? <div class="dither" data-dither={src}><img class="placeholder-img" src={src} alt="" loading="lazy" /></div>
     : <div class="placeholder"><span>[ PHOTO / RENDER ]</span></div>}
   <div class="card-head">
     <H>{title}</H>
@@ -15,3 +16,41 @@ const { title, status, summary, image } = project.data;
   </div>
   <p>{summary}</p>
 </a>
+
+<script>
+  // Project photos render as a two-tone dither in the page's ink/paper colours;
+  // hovering a card fades back to the real photo. Without WebGPU, the photo just shows.
+  import { hasWebGPU, mount, onThemeChange, token } from '../lib/shaders';
+
+  const boxes = document.querySelectorAll<HTMLElement>('[data-dither]');
+  if (boxes.length && hasWebGPU()) {
+    // colorA paints the photo's shadows, so it's whichever of ink/paper is darker.
+    const colors = () => {
+      const dark = document.documentElement.dataset.theme === 'dark';
+      const [ink, bg] = [token('--ink'), token('--bg')];
+      return dark ? { colorA: bg, colorB: ink } : { colorA: ink, colorB: bg };
+    };
+    const io = new IntersectionObserver((entries) => {
+      for (const e of entries) {
+        if (!e.isIntersecting) continue;
+        io.unobserve(e.target);
+        const box = e.target as HTMLElement;
+        const canvas = document.createElement('canvas');
+        canvas.setAttribute('aria-hidden', 'true');
+        // Relative size up front, or the library pins the canvas to its first pixel size.
+        canvas.style.width = canvas.style.height = 'calc(100% - 2px)';
+        box.append(canvas);
+        mount(canvas, {
+          components: [{
+            type: 'Dither', id: 'dither',
+            props: { pattern: 'bayer4', pixelSize: 2, threshold: 0.5, ...colors() },
+            children: [{ type: 'ImageTexture', props: { url: box.dataset.dither, objectFit: 'cover' } }],
+          }],
+        }, () => box.classList.add('is-dithered')).then((shader) => {
+          if (shader) onThemeChange(() => shader.update('dither', colors()));
+        });
+      }
+    }, { rootMargin: '200px' });
+    boxes.forEach((b) => io.observe(b));
+  }
+</script>
