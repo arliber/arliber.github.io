@@ -6,11 +6,14 @@ import SectionHead from '../components/SectionHead.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import PostRow from '../components/PostRow.astro';
 import LinkItem from '../components/LinkItem.astro';
-import { getProjects, getPosts, getLinks } from '../lib/site';
+import DitherScript from '../components/DitherScript.astro';
+import { getProjects, getPosts, getLinks, url } from '../lib/site';
+import { getShots } from '../lib/inspiration';
 
 const projects = (await getProjects()).slice(0, 6);
 const posts = (await getPosts()).slice(0, 4);
 const links = (await getLinks()).slice(0, 4);
+const shots = await getShots(4);
 ---
 <Base title="Arik — Home">
   <section class="hero">
@@ -51,4 +54,20 @@ const links = (await getLinks()).slice(0, 4);
     <SectionHead num="03" path="~/reading" href="/reading/" linkLabel="All links" />
     {links.map((l) => <LinkItem link={l} />)}
   </section>
+
+  {shots.length > 0 && <>
+    <div class="hatch-band" aria-hidden="true"></div>
+
+    <section id="inspiration" class="rule-strong">
+      <SectionHead num="04" path="~/inspiration" href="/inspiration/" linkLabel="All images" />
+      <div class="strip">
+        {shots.map((s) => (
+          <a href={url('/inspiration/')} aria-label="Inspiration board">
+            <div class="dither" data-dither={s.thumb.src}><img class="placeholder-img" src={s.thumb.src} alt="" loading="lazy" /></div>
+          </a>
+        ))}
+      </div>
+    </section>
+    <DitherScript />
+  </>}
 </Base>

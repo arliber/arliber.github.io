@@ -1,0 +1,43 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getShots } from '../../lib/inspiration';
+
+const shots = await getShots();
+---
+<Base title="Arik — Inspiration" path={[{ label: 'inspiration' }]} footerRuled>
+  <section class="intro soft">
+    <div class="prompt"><span>arik@site</span>:~$ ls inspiration/</div>
+    <h1>Things that look good.</h1>
+    <p>Screenshots of designs and visual work I want to remember.</p>
+  </section>
+
+  <div class="board">
+    {shots.map((s) => (
+      <a class="shot" href={s.full.src} data-shot>
+        <img src={s.thumb.src} width={s.thumb.attributes.width} height={s.thumb.attributes.height} alt="" loading="lazy" decoding="async" />
+        <span class="sr-only">Open {s.name}</span>
+      </a>
+    ))}
+  </div>
+
+  <dialog class="lightbox" aria-label="Image viewer">
+    <button type="button" class="lightbox-close" aria-label="Close">✕ close</button>
+    <img alt="" />
+  </dialog>
+</Base>
+
+<script>
+  const dialog = document.querySelector<HTMLDialogElement>('.lightbox')!;
+  const img = dialog.querySelector('img')!;
+
+  document.querySelectorAll<HTMLAnchorElement>('[data-shot]').forEach((a) =>
+    a.addEventListener('click', (e) => {
+      e.preventDefault();
+      img.src = a.href;
+      dialog.showModal();
+    }),
+  );
+  // Any click closes: backdrop, image or button.
+  dialog.addEventListener('click', () => dialog.close());
+  dialog.addEventListener('close', () => img.removeAttribute('src'));
+</script>
