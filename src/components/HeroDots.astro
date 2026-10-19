@@ -1,0 +1,24 @@
+---
+// Faint twinkling dot grid behind the home hero (WebGPU only; otherwise nothing).
+---
+<div class="hero-dots" aria-hidden="true" data-hero-dots></div>
+
+<script>
+  import { hasWebGPU, mount, onThemeChange, token } from '../lib/shaders';
+
+  const host = document.querySelector<HTMLElement>('[data-hero-dots]');
+  if (host && hasWebGPU()) {
+    const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const canvas = document.createElement('canvas');
+    canvas.style.width = canvas.style.height = '100%';
+    host.append(canvas);
+    mount(canvas, {
+      components: [{
+        type: 'DotGrid', id: 'dots',
+        props: { color: token('--muted'), density: 34, dotSize: 0.12, twinkle: still ? 0 : 0.6 },
+      }],
+    }, () => host.classList.add('is-on')).then((shader) => {
+      if (shader) onThemeChange(() => shader.update('dots', { color: token('--muted') }));
+    });
+  }
+</script>

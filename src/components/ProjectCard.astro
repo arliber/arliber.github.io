@@ -18,17 +18,18 @@ const src = image && (image.startsWith('/') ? url(image) : image);
 </a>
 
 <script>
-  // Project photos render as a two-tone dither in the page's ink/paper colours;
+  // Project photos render as a two-tone dither in the page's grey/paper colours;
   // hovering a card fades back to the real photo. Without WebGPU, the photo just shows.
   import { hasWebGPU, mount, onThemeChange, token } from '../lib/shaders';
 
   const boxes = document.querySelectorAll<HTMLElement>('[data-dither]');
   if (boxes.length && hasWebGPU()) {
-    // colorA paints the photo's shadows, so it's whichever of ink/paper is darker.
+    // colorA paints the photo's shadows, so it's whichever of --sub/paper is darker.
+    // --sub rather than --ink keeps the dither soft against the page.
     const colors = () => {
       const dark = document.documentElement.dataset.theme === 'dark';
-      const [ink, bg] = [token('--ink'), token('--bg')];
-      return dark ? { colorA: bg, colorB: ink } : { colorA: ink, colorB: bg };
+      const [tone, bg] = [token('--sub'), token('--bg')];
+      return dark ? { colorA: bg, colorB: tone } : { colorA: tone, colorB: bg };
     };
     const io = new IntersectionObserver((entries) => {
       for (const e of entries) {
@@ -43,7 +44,7 @@ const src = image && (image.startsWith('/') ? url(image) : image);
         mount(canvas, {
           components: [{
             type: 'Dither', id: 'dither',
-            props: { pattern: 'bayer4', pixelSize: 2, threshold: 0.5, ...colors() },
+            props: { pattern: 'bayer4', pixelSize: 1, threshold: 0.5, ...colors() },
             children: [{ type: 'ImageTexture', props: { url: box.dataset.dither, objectFit: 'cover' } }],
           }],
         }, () => box.classList.add('is-dithered')).then((shader) => {

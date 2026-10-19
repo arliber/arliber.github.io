@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import Dashboard from '../components/Dashboard.astro';
+import HeroDots from '../components/HeroDots.astro';
 import SectionHead from '../components/SectionHead.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import PostRow from '../components/PostRow.astro';
@@ -14,6 +15,7 @@ const links = (await getLinks()).slice(0, 4);
 <Base title="Arik — Home">
   <section class="hero">
     <div class="hero-intro">
+      <HeroDots />
 <pre class="banner" role="img" aria-label="Liber A.">██╗     ██╗██████╗ ███████╗██████╗    █████╗
 ██║     ██║██╔══██╗██╔════╝██╔══██╗  ██╔══██╗
 ██║     ██║██████╔╝█████╗  ██████╔╝  ███████║
