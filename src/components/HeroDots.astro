@@ -15,7 +15,7 @@
     mount(canvas, {
       components: [{
         type: 'DotGrid', id: 'dots',
-        props: { color: token('--muted'), density: 34, dotSize: 0.12, twinkle: still ? 0 : 0.6 },
+        props: { color: token('--muted'), density: 30, dotSize: 0.2, twinkle: still ? 0 : 0.9 },
       }],
     }, () => host.classList.add('is-on')).then((shader) => {
       if (shader) onThemeChange(() => shader.update('dots', { color: token('--muted') }));
