@@ -5,6 +5,8 @@ export const SITE = {
   timeZone: 'Asia/Jerusalem',
   github: 'https://github.com/arliber',
   linkedin: 'https://www.linkedin.com/in/arikliber/',
+  // Public board whose pins join the inspiration board; fetched at build time (daily cron rebuild).
+  pinterestBoard: 'https://www.pinterest.com/arikliber/inspiration/',
   repo: 'https://github.com/arliber/arliber.github.io',
   branch: 'main',
   // Drafts are listed in `astro dev` but hidden from the production build.

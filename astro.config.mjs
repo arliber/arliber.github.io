@@ -34,6 +34,8 @@ export default defineConfig({
   base,
   trailingSlash: 'always',
   output: 'static',
+  // Pinterest pins are downloaded and optimized at build time (src/lib/inspiration.ts).
+  image: { domains: ['i.pinimg.com'] },
   vite: { plugins: [slimShaders()] },
   markdown: {
     syntaxHighlight: false,
