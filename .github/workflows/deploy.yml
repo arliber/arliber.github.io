@@ -5,6 +5,9 @@ on:
     branches: [main]
   pull_request:
   workflow_dispatch:
+  # Daily: save new Pinterest pins (SITE.pinterestBoard) to src/data/pins.json, then rebuild.
+  schedule:
+    - cron: '0 4 * * *'
 
 permissions:
   contents: read
@@ -16,15 +19,41 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  sync-pins:
+    if: (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch') && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v7
+      - run: node scripts/sync-pins.mjs
+      - name: Commit new pins
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          if ! git diff --quiet src/data/pins.json; then
+            git commit -m 'Sync Pinterest pins' src/data/pins.json
+          elif [ $(( $(date +%s) - $(git log -1 --format=%ct) )) -gt $(( 50 * 86400 )) ]; then
+            # GitHub disables scheduled workflows after 60 days without commits.
+            git commit --allow-empty -m 'Keep the daily pin sync alive'
+          fi
+          git push
+
   build:
+    needs: sync-pins
+    # Runs when sync-pins is skipped (push, PR) and still rebuilds if Pinterest is down.
+    if: ${{ !cancelled() }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.ref }} # pick up the commit sync-pins just pushed
       # Runs `npm run build` = `astro check && astro build` (type + content-schema validation).
       - uses: withastro/action@v6
 
   deploy:
-    if: github.event_name != 'pull_request'
+    # Explicit result check: a skipped sync-pins would otherwise skip this job too.
+    if: ${{ !cancelled() && needs.build.result == 'success' && github.event_name != 'pull_request' }}
     needs: build
     runs-on: ubuntu-latest
     environment:

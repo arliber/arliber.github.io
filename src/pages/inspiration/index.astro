@@ -14,8 +14,8 @@ const shots = await getShots();
   <div class="board">
     {shots.map((s) => (
       <a class="shot" href={s.full.src} data-shot>
-        <img src={s.thumb.src} width={s.thumb.attributes.width} height={s.thumb.attributes.height} alt="" loading="lazy" decoding="async" />
-        <span class="sr-only">Open {s.name}</span>
+        <img src={s.thumb.src} width={s.thumb.attributes.width} height={s.thumb.attributes.height} alt={s.alt} loading="lazy" decoding="async" />
+        <span class="sr-only">Open larger</span>
       </a>
     ))}
   </div>
