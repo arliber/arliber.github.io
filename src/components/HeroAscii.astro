@@ -1,0 +1,30 @@
+---
+// Slow-drifting noise field drawn as Plex Mono characters behind the home hero
+// (WebGPU only; otherwise nothing).
+---
+<div class="hero-fx" aria-hidden="true" data-hero-fx></div>
+
+<script>
+  import { hasWebGPU, mount, onThemeChange, token } from '../lib/shaders';
+
+  // The effect fetches its font from Google Fonts unless the family is one it doesn't
+  // know, so it gets our self-hosted Plex Mono under an alias (see .hero-fx in global.css).
+  const FONT = 'Plex Mono Glyphs';
+
+  const host = document.querySelector<HTMLElement>('[data-hero-fx]');
+  if (host && hasWebGPU()) {
+    const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const canvas = document.createElement('canvas');
+    canvas.style.width = canvas.style.height = '100%';
+    host.append(canvas);
+    document.fonts.load(`14px "${FONT}"`).catch(() => {}).then(() => mount(canvas, {
+      components: [{
+        type: 'Ascii', id: 'fx',
+        props: { characters: ' .:-=+*#', cellSize: 14, fontFamily: FONT, color: token('--muted') },
+        children: [{ type: 'SimplexNoise', props: { colorA: '#000000', colorB: '#ffffff', scale: 1.6, contrast: 0.6, balance: -0.25, speed: still ? 0 : 0.15 } }],
+      }],
+    }, () => host.classList.add('is-on'))).then((shader) => {
+      if (shader) onThemeChange(() => shader.update('fx', { color: token('--muted') }));
+    });
+  }
+</script>

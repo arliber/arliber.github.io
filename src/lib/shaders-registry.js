@@ -2,13 +2,14 @@
 // plugin in astro.config.mjs). The stock chunk imports all ~200 effects (~700 KB
 // gzipped); the renderer only needs the definitions our presets name.
 // Add an import here before using another effect type in a preset.
-import DotGrid from 'shaders/core/DotGrid';
+import Ascii from 'shaders/core/Ascii';
 import Dither from 'shaders/core/Dither';
 import ImageTexture from 'shaders/core/ImageTexture';
 import Paper from 'shaders/core/Paper';
+import SimplexNoise from 'shaders/core/SimplexNoise';
 import SolidColor from 'shaders/core/SolidColor';
 
-const entries = [Dither, DotGrid, ImageTexture, Paper, SolidColor].map((definition) => ({ name: definition.name, definition }));
+const entries = [Ascii, Dither, ImageTexture, Paper, SimplexNoise, SolidColor].map((definition) => ({ name: definition.name, definition }));
 const shaderRegistry = Object.fromEntries(entries.map((e) => [e.name, e]));
 const getAllShaders = () => entries;
 const getShaderByName = (name) => shaderRegistry[name];

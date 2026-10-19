@@ -262,15 +262,16 @@ a:hover { text-decoration: underline; text-underline-offset: 4px; }
   position: relative; isolation: isolate;
   display: flex; flex-direction: column; justify-content: center; gap: 22px;
 }
-/* twinkling dot grid behind the intro; fades in once the GPU has drawn, thins out toward the text */
-.hero-dots {
+/* ASCII noise field behind the intro (HeroAscii); fades in once the GPU has drawn, thins out under the text */
+@font-face { font-family: 'Plex Mono Glyphs'; font-weight: 400; font-display: block; src: url(/fonts/IBMPlexMono-Regular.woff2) format('woff2'); }
+.hero-fx {
   position: absolute; inset: 0; z-index: -1; pointer-events: none;
   opacity: 0; transition: opacity 1.2s ease;
   -webkit-mask-image: radial-gradient(ellipse at 80% 50%, #000 0 40%, rgba(0,0,0,.3) 100%);
   mask-image: radial-gradient(ellipse at 80% 50%, #000 0 40%, rgba(0,0,0,.3) 100%);
 }
-.hero-dots.is-on { opacity: 1; }
-.hero-dots canvas { display: block; }
+.hero-fx.is-on { opacity: 1; }
+.hero-fx canvas { display: block; }
 .banner {
   margin: 0; font-family: var(--mono); font-size: clamp(6.5px, 1.25vw, 14px); line-height: 1.05;
   color: var(--accent); overflow-x: auto;
